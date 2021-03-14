@@ -18,6 +18,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var trueButton: UIButton!
     @IBOutlet weak var falseButton: UIButton!
     @IBOutlet weak var progressBar: UIProgressView!
+    @IBOutlet weak var lblScore: UILabel!
     
     // MARK: - Life Cycle
     override func viewDidLoad() {
@@ -51,6 +52,7 @@ class ViewController: UIViewController {
     @objc func updateUI(){
         lblQuestion.text = quizBrain.getQuestionText()
         progressBar.progress = quizBrain.getProgress()
+        lblScore.text = "Score: \(quizBrain.getScore())"
         
         trueButton.backgroundColor = UIColor.clear
         falseButton.backgroundColor = UIColor.clear
