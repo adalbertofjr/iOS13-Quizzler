@@ -1,14 +1,14 @@
 //
-//  ViewController.swift
+//  QuizBrain.swift
 //  Quizzler-iOS13
 //
-//  Created by Angela Yu on 12/07/2019.
-//  Copyright © 2019 The App Brewery. All rights reserved.
+//  Created by Adalberto Fernandes Júnior on 13/03/21.
+//  Copyright © 2021 The App Brewery. All rights reserved.
 //
 
-import UIKit
+import Foundation
 
-class ViewController: UIViewController {
+struct QuizBrain {
     
     // MARK: - Variables
     let quiz = [
@@ -26,54 +26,31 @@ class ViewController: UIViewController {
         Question(q: "Chocolate affects a dog's heart and nervous system; a few ounces are enough to kill a small dog.", a: "True")
         
     ]
+    
     var questionNumber = 0
     
-    // MARK: - IBOutlets
-    @IBOutlet weak var lblQuestion: UILabel!
-    @IBOutlet weak var trueButton: UIButton!
-    @IBOutlet weak var falseButton: UIButton!
-    @IBOutlet weak var progressBar: UIProgressView!
-    
-    // MARK: - Life Cycle
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        updateUI()
+    // MARK: - Functions
+    func check(answer: String) -> Bool {
+        if answer == quiz[questionNumber].answer {
+            return true
+        }else{
+            return false
+        }
     }
     
-    // MARK: - IBActions
-    @IBAction func answerButtonPressed(_ sender: UIButton) {
-        let userAnswer = sender.currentTitle
-        let actualQuestion = quiz[questionNumber]
-        let actualAnser = actualQuestion.answer
-        
-        if userAnswer == actualAnser {
-            trueButton.backgroundColor = UIColor.green
-        }else{
-            falseButton.backgroundColor = UIColor.red
-        }
-                       
+    func getQuestionText() -> String {
+        return quiz[questionNumber].text
+    }
+    
+    func getProgress() -> Float {
+        return Float(questionNumber + 1) / Float(quiz.count)
+    }
+    
+    mutating func nextQuestion() {
         if (questionNumber < quiz.count - 1) {
             questionNumber += 1
         }else{
-            questionNumber = 0
-            progressBar.progress = 0.0
+            questionNumber = 0            
         }
-        
-        Timer.scheduledTimer(
-            timeInterval: 0.2,
-            target: self,
-            selector: #selector(updateUI),
-            userInfo: nil,
-            repeats: false)
     }
-    
-    @objc func updateUI(){
-        lblQuestion.text = quiz[questionNumber].text
-        trueButton.backgroundColor = UIColor.clear
-        falseButton.backgroundColor = UIColor.clear
-        progressBar.progress = Float(questionNumber + 1) / Float(quiz.count)
-    }
-    
 }
-
